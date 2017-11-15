@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Vega.Persistence;
+using AutoMapper;
 
 namespace Vega
 {
@@ -23,6 +26,10 @@ namespace Vega
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAutoMapper();
+            var connection = @"Server=localhost;Database=Vega;User id = test_user;Password=Password12345;";
+            services.AddDbContext<VegaDbContext>(options=>options.UseSqlServer(connection));
+            //services.AddDbContext<VegaDbContext>(options=>options.UseSqlServer("ConnectionStrings.Default"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
